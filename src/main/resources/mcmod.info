@@ -1,0 +1,12 @@
+[
+	{
+	  "modid": "darktheme",
+	  "name": "Dark Theme Mod",
+	  "description": "Turn off the lights!",
+	  "version": "13r",
+	  "mcversion": "1.12.2",
+	  "authorList": ["Zeitheron"],
+	  "url": "https://minecraft.curseforge.com/projects/323440/",
+	  "logoFile": "darktheme.png"
+	}
+]
