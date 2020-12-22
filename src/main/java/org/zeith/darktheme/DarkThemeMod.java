@@ -200,6 +200,8 @@ public class DarkThemeMod
 				}
 			} catch(IOException ioe)
 			{
+				remoteDefScript = null;
+				remoteDefScriptStr = "";
 				if(ioe instanceof UnknownHostException)
 				{
 					try(InputStream srcIn = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("darktheme", "default.ds")).getInputStream();
@@ -218,9 +220,7 @@ public class DarkThemeMod
 					} catch(Throwable err)
 					{
 					}
-				}
-
-				throw new RuntimeException(ioe);
+				} else throw new RuntimeException(ioe);
 			}
 			bar.step("Validating DarkScripts...");
 			if(!darkScripts.isDirectory() && remoteDefScript != null)

@@ -14,6 +14,6 @@ jei_version=4.11.0.206
 mod_id=darktheme
 mod_id_fancy=DarkTheme
 mod_name=Dark Theme Mod
-mod_version=12.2.15
+mod_version=12.2.16
 cf_project=323440
 release_type=release
