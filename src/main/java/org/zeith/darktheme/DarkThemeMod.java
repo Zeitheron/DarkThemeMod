@@ -45,11 +45,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
 @Mod(modid = "darktheme", name = "Dark Theme Mod", version = "13r", certificateFingerprint = "9f5e2a811a8332a842b34f6967b7db0ac4f24856", updateJSON = "http://dccg.herokuapp.com/api/fmluc/323440", clientSideOnly = true, guiFactory = "org.zeith.darktheme.gui.CfgFactory")
 public class DarkThemeMod
@@ -83,6 +83,12 @@ public class DarkThemeMod
 	boolean fontsOverriden;
 	public static final Consumer<DarkScript.ModifyContext> APPLY_CONTEXT;
 	public static final Consumer<DarkScript.ModifyContext> UNDO_CONTEXT;
+
+	private static DarkThemeMod INSTANCE;
+
+	{
+		INSTANCE = this;
+	}
 
 	@Mod.EventHandler
 	public void ctr(FMLConstructionEvent e)
@@ -194,6 +200,26 @@ public class DarkThemeMod
 				}
 			} catch(IOException ioe)
 			{
+				if(ioe instanceof UnknownHostException)
+				{
+					try(InputStream srcIn = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("darktheme", "default.ds")).getInputStream();
+						FileOutputStream srcOut = new FileOutputStream(def))
+					{
+						int r;
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						byte[] buf = new byte[1024];
+						while((r = srcIn.read(buf)) > 0)
+						{
+							srcOut.write(buf, 0, r);
+							baos.write(buf, 0, r);
+						}
+						remoteDefScriptStr = baos.toString();
+						remoteDefScript = new DarkScript(remoteDefScriptStr.replaceAll("\r", "").split("\n")).parse(false, null, null);
+					} catch(Throwable err)
+					{
+					}
+				}
+
 				throw new RuntimeException(ioe);
 			}
 			bar.step("Validating DarkScripts...");
@@ -359,7 +385,10 @@ public class DarkThemeMod
 		{
 			reloadMarker = true;
 		}
-		MinecraftForge.EVENT_BUS.post(new StylesReloadEvent.Post());
+
+		StylesReloadEvent.StylesContext ctx = new StylesReloadEvent.StylesContext(DarkThemeMod.INSTANCE::texColor);
+
+		MinecraftForge.EVENT_BUS.post(new StylesReloadEvent.Post(ctx));
 		LOG.info("Styles reloaded.");
 	}
 
@@ -610,7 +639,7 @@ public class DarkThemeMod
 					ITextureObject obj;
 					MapMath.add(TXMAP_EXCLUDES, txm.textureMap, txm);
 					if((obj = mgr.getTexture(txm.textureMap)) instanceof IFixedTxMap)
-					    ((IFixedTxMap) obj).addExclude(txm.spriteName);
+						((IFixedTxMap) obj).addExclude(txm.spriteName);
 				}
 		};
 

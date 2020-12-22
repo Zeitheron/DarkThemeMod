@@ -1,6 +1,5 @@
 package org.zeith.darktheme.internal.ds;
 
-import org.zeith.darktheme.internal.data.*;
 import net.minecraft.util.ResourceLocation;
 import org.zeith.darktheme.internal.data.*;
 
@@ -85,9 +84,9 @@ public final class DarkCompiler
 
 	static
 	{
-		DarkCompiler.handle((out, obj) -> out.writeLong(obj), DataInputStream::readLong, Long.TYPE, Long.class);
-		DarkCompiler.handle((out, obj) -> out.writeInt(obj), DataInputStream::readInt, Integer.TYPE, Integer.class);
-		DarkCompiler.handle((out, obj) -> out.writeUTF(obj), DataInput::readUTF, String.class);
+		DarkCompiler.handle(DataOutputStream::writeLong, DataInputStream::readLong, Long.TYPE, Long.class);
+		DarkCompiler.handle(DataOutputStream::writeInt, DataInputStream::readInt, Integer.TYPE, Integer.class);
+		DarkCompiler.handle(DataOutputStream::writeUTF, DataInput::readUTF, String.class);
 		DarkCompiler.handle((out, obj) ->
 		{
 			out.writeUTF(obj.getTex().toString());

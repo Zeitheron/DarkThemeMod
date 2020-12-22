@@ -1,7 +1,7 @@
 #Project info
 author=Zeitheron
-start_git_commit=?
-git_commit=https://gitlab.com/Zeitheron/???/commit/{{hash}}
+start_git_commit=8c5f6ae5faf08327b8445235f0f0a8db7cc94504
+git_commit=https://github.com/Zeitheron/DarkThemeMod/commit/{{hash}}
 
 #Runtime info
 forge_version=14.23.5.2847
@@ -14,6 +14,6 @@ jei_version=4.11.0.206
 mod_id=darktheme
 mod_id_fancy=DarkTheme
 mod_name=Dark Theme Mod
-mod_version=12.2.14
+mod_version=12.2.15
 cf_project=323440
 release_type=release

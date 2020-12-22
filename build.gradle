@@ -61,7 +61,6 @@ repositories {
 }
 
 dependencies {
-	deobfCompile "tk.zeitheron.HammerLib:HammerLib-${config.minecraft_version}:${config.hl_version}:deobf"
 }
 
 processResources
@@ -119,7 +118,6 @@ curseforge {
 		  displayName = "[${config.minecraft_version}] ${config.mod_name} - ${config.mod_version}"
 		}
 		relations {
-            requiredLibrary 'Hammer-Lib'
         }
 	}
 }
@@ -165,7 +163,7 @@ task makeChangelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
     untaggedName = "Version ${project.version}"
     fromCommit = "${config.start_git_commit}"
     toRef =  "HEAD"
-    gitHubIssuePattern = "nonada123";
+    gitHubIssuePattern = "nonada123"
     templateContent = """
 {{#tags}}
 <h3><a href="https://github.com/dragon-forge/maven">To get developer builds, consult our maven repository</a></h3>
